@@ -10,7 +10,7 @@ export const getAllNotes = async (req, res) => {
   const noteQuery = Note.find();
 
   if (tag) {
-    myQuery.where('tag').equals(tag);
+    noteQuery.where('tag').equals(tag);
   }
 
   if (search) {
@@ -28,7 +28,7 @@ export const getAllNotes = async (req, res) => {
   ]);
   // tag - один із можливих тегів нотатки. Список всіх можливих тегів буде надано далі. Для цієї властивості в схемі додайте індекс.
   // search - будь-який текст для пошуку у нотатках по властивостям title та content.
-  const totalPages = Math.cell(totalNotes / limit);
+  const totalPages = Math.ceil(totalNotes / limit);
 
   res.status(200).json({
     page,
