@@ -26,13 +26,13 @@ const objectIdValid = (value, helpers) => {
   return helpers.message('Invalid note ID!');
 };
 export const noteIdSchema = {
-  [Segments.PARAMS]: Joj.object({
+  [Segments.PARAMS]: Joi.object({
     noteId: Joi.string().custom(objectIdValid).required(),
   }),
 };
 
 export const updateNoteSchema = {
-  [Segments.PARAMS]: Joj.object({
+  [Segments.PARAMS]: Joi.object({
     noteId: Joi.string().custom(objectIdValid).required(),
   }),
   [Segments.BODY]: Joi.object({
