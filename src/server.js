@@ -27,8 +27,22 @@ app.use(notFoundHandler);
 app.use(errors());
 app.use(errorHandler);
 
-await connectMongoDB();
+// await connectMongoDB();
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
+const startServer = async () => {
+  try {
+    await connectMongoDB();
+
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error('Mongo connection failed:', err);
+    process.exit(1);
+  }
+};
+
+startServer();
