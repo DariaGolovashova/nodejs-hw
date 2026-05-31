@@ -20,10 +20,10 @@ export const createNoteSchema = {
 };
 
 const objectIdValid = (value, helpers) => {
-  if (isValidObjectId(value)) {
-    return value;
+  if (!isValidObjectId(value)) {
+    return helpers.message('Invalid note ID!');
   }
-  return helpers.message('Invalid note ID!');
+  return value;
 };
 export const noteIdSchema = {
   [Segments.PARAMS]: Joi.object({
@@ -36,8 +36,8 @@ export const updateNoteSchema = {
     noteId: Joi.string().custom(objectIdValid).required(),
   }),
   [Segments.BODY]: Joi.object({
-    title: Joi.string().min(1).max(50).value(),
-    content: Joi.string().valid(),
+    title: Joi.string().min(1).max(50),
+    content: Joi.string().allow(''),
     tag: Joi.string().valid(...TAGS),
   }).min(1),
 };
