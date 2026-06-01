@@ -1,4 +1,3 @@
-import { required } from 'joi';
 import { model, Schema } from 'mongoose';
 // import { TAGS } from '../constants/tags.js';
 // import { type } from 'node:os';
