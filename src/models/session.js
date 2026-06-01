@@ -8,7 +8,7 @@ const sessionSchema = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
     },
-    accsessToken: {
+    accessToken: {
       type: String,
       required: true,
     },

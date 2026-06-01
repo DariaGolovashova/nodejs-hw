@@ -19,7 +19,11 @@ export const registerUser = async (req, res) => {
   const session = await createSession(newUser._id);
   setSessionCookies(res, session);
 
-  res.status(201).json({});
+  const userResponse = {
+    _id: newUser._id,
+    email: newUser.email,
+  };
+  res.status(201).json({ userResponse });
 };
 
 export const loginUser = async (req, res) => {
@@ -38,7 +42,11 @@ export const loginUser = async (req, res) => {
   const session = await createSession(user._id);
   setSessionCookies(res, session);
 
-  res.status(200).json({});
+  const userResponse = {
+    _id: newUser._id,
+    email: user.email,
+  };
+  res.status(200).json({ userResponse });
 };
 
 export const logoutUser = async (req, res) => {
@@ -53,7 +61,7 @@ export const logoutUser = async (req, res) => {
   res.status(204).send();
 };
 
-export const refreshSession = async (req, res) => {
+export const refreshUserSession = async (req, res) => {
   const { sessionId, refreshToken } = req.cookies;
 
   if (!sessionId || !refreshToken) {
@@ -76,7 +84,7 @@ export const refreshSession = async (req, res) => {
     throw createHttpError(401, 'Session token expired');
   }
 
-  await session.deleteOne();
+  await session.deleteOne({ _id: session._id });
 
   const newSession = await createSession(session.userId);
   setSessionCookies(res, newSession);

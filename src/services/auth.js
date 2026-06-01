@@ -5,15 +5,15 @@ import { ONE_DAY, FIFTEEN_MINUTES } from '../constants/time.js';
 export const createSession = async (id) => {
   return Session.create({
     userId: id,
-    accessToken: crypto.randomUUID,
-    refreshToken: crypto.randomUUID,
-    accessTokenValidUntil: new Date(Date.now + FIFTEEN_MINUTES),
-    refreshTokenValidUntil: new Date(Date.now + ONE_DAY),
+    accessToken: crypto.randomUUID(),
+    refreshToken: crypto.randomUUID(),
+    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
   });
 };
 
 export const setSessionCookies = (res, session) => {
-  res.cookie('accessToken', session.accsessToken, {
+  res.cookie('accessToken', session.accessToken, {
     httpOnly: true,
     secure: true,
     sameSite: 'none',
