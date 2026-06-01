@@ -6,9 +6,11 @@ import { connectMongoDB } from './db/connectMongoDB.js';
 
 import helmet from 'helmet';
 import { errors } from 'celebrate';
+import cookieParser from 'cookie-parser';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import notesRouters from './routes/notesRoutes.js';
+import authRouters from './routes/authRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,8 +23,11 @@ app.use(
 );
 app.use(helmet());
 app.use(express.json());
+app.use(cookieParser());
+
 app.use(logger);
 app.use(notesRouters);
+app.use(authRouters);
 app.use(notFoundHandler);
 app.use(errors());
 app.use(errorHandler);
