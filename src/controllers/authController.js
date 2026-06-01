@@ -23,7 +23,7 @@ export const registerUser = async (req, res) => {
     _id: newUser._id,
     email: newUser.email,
   };
-  res.status(201).json({ userResponse });
+  res.status(201).json(userResponse);
 };
 
 export const loginUser = async (req, res) => {
@@ -43,10 +43,10 @@ export const loginUser = async (req, res) => {
   setSessionCookies(res, session);
 
   const userResponse = {
-    _id: newUser._id,
+    _id: user._id,
     email: user.email,
   };
-  res.status(200).json({ userResponse });
+  res.status(200).json(userResponse);
 };
 
 export const logoutUser = async (req, res) => {
