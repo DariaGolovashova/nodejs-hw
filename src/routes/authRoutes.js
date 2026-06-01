@@ -4,6 +4,12 @@ import {
   registerUserSchema,
   loginUserSchema,
 } from '../validations/authValidation.js';
+import {
+  registerUser,
+  loginUser,
+  logoutUser,
+  refreshSession,
+} from '../controllers/authController.js';
 
 const router = Router();
 
