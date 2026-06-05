@@ -7,10 +7,13 @@ import { connectMongoDB } from './db/connectMongoDB.js';
 import helmet from 'helmet';
 import { errors } from 'celebrate';
 import cookieParser from 'cookie-parser';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger-output.json' with { type: 'json' };
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import notesRouters from './routes/notesRoutes.js';
 import authRouters from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,18 +28,22 @@ app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(logger);
 app.use(notesRouters);
 app.use(authRouters);
+app.use(userRoutes);
+
 app.use(notFoundHandler);
 app.use(errors());
 app.use(errorHandler);
 
-// await connectMongoDB();
+await connectMongoDB();
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+  console.log(`Docs at http://localhost:${process.env.PORT}/api-docs`);
+});
 const startServer = async () => {
   try {
     await connectMongoDB();
