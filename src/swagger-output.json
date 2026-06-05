@@ -136,7 +136,7 @@
         }
       }
     },
-    "/students": {
+    "/notes": {
       "get": {
         "description": "",
         "parameters": [
@@ -198,7 +198,7 @@
         }
       }
     },
-    "/students/{studentId}": {
+    "/notes/{noteId}": {
       "get": {
         "description": "",
         "parameters": [
@@ -221,7 +221,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "studentId",
+            "name": "noteId",
             "in": "path",
             "required": true,
             "schema": {
@@ -239,7 +239,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "studentId",
+            "name": "noteId",
             "in": "path",
             "required": true,
             "schema": {
