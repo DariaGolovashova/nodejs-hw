@@ -130,11 +130,19 @@ export const requestResetEmail = async (req, res) => {
     link: resetLink,
   });
 
-  await sendEmail({
-    to: req.body.email,
-    subject: 'Password reset',
-    html,
-  });
+  try {
+    await sendEmail({
+      from: process.env.SMTP_FROM,
+      to: req.body.email,
+      subject: 'Password reset',
+      html,
+    });
+  } catch (error) {
+    throw createHttpError(
+      500,
+      'Failed to send the email, please try again later.',
+    );
+  }
 
   res.status(200).json({ message: 'Password reset email sent successfully' });
 };
