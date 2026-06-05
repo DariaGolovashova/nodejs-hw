@@ -1,5 +1,5 @@
 import { User } from '../models/user.js';
-import { saveFileToCloudinary } from '../utils/saveFileToCloudinary';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export const updateUserAvatar = async (req, res) => {
   const result = await saveFileToCloudinary(req.file.buffer, req.user._id);
