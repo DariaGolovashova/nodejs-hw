@@ -105,10 +105,15 @@ export const requestResetEmail = async (req, res) => {
   }
 
   const resetToken = jwt.sign(
-    { email: req.body.email, sub: user._id },
+    {
+      // email: user.email,
+      email: req.body.email,
+      sub: user._id,
+    },
     process.env.JWT_SECRET,
     { expiresIn: '15m' },
   );
+
   const frontEndUrl = `${process.env.FRONTEND_DOMAIN}/reset-password?token=${resetToken}`;
 
   try {
@@ -116,11 +121,9 @@ export const requestResetEmail = async (req, res) => {
       from: process.env.SMTP_FROM,
       to: req.body.email,
       subject: 'Password reset',
-      html: (
-        <p>
-          Click <a href="${frontEndUrl}">here</a> to reset your password!
-        </p>
-      ),
+      html: `<p>
+          Click  <a href="${frontEndUrl}">here</a> to reset your password!
+        </p>`,
     });
   } catch (error) {
     throw createHttpError(
@@ -129,7 +132,7 @@ export const requestResetEmail = async (req, res) => {
     );
   }
 
-  https: res.status(200).json({});
+  res.status(200).json({'Password reset email sent successfully'});
 };
 
 export const resetPassword = async (req, res) => {
@@ -142,7 +145,8 @@ export const resetPassword = async (req, res) => {
 
   const user = await User.findOne({
     _id: payload.sub,
-    email: user.email,
+    // email: user.email,
+    email: payload.email,
   });
   if (!user) {
     throw createHttpError(404, 'User not found');
