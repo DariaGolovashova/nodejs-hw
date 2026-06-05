@@ -132,7 +132,7 @@ export const requestResetEmail = async (req, res) => {
     );
   }
 
-  res.status(200).json({'Password reset email sent successfully'});
+  res.status(200).json({ message: 'Password reset email sent successfully' });
 };
 
 export const resetPassword = async (req, res) => {
